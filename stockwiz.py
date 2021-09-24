@@ -167,27 +167,31 @@ class StockWiz():
         eps4 = 0
 
         for tr in soup_trs:
-            #print(tr.find('td'))
             tds = tr.find_all('td')
-            if (str.strip(tds[12].text) != '-'): # 營業毛利 12
-                #print(tds[12].text)
+            if (str.strip(tds[1].text) != '-'): # 股本
+                try:
+                    gross_profit_margin.append(float(str.strip(tds[12].text)))
+                    net_operating_profit_margin.append(float(str.strip(tds[13].text)))
+                    pre_tax_operating_profit_margin.append(float(str.strip(tds[14].text)))
+                except:
+                    gross_profit_margin.append(0)
+                    net_operating_profit_margin.append(0)
+                    pre_tax_operating_profit_margin.append(0)
 
-                gross_profit_margin.append(float(str.strip(tds[12].text)))
-                net_operating_profit_margin.append(float(str.strip(tds[13].text)))
-                pre_tax_operating_profit_margin.append(float(str.strip(tds[14].text)))
                 nopat_margin.append(float(str.strip(tds[15].text)))
 
                 roe.append(float(str.strip(tds[16].text)))
                 roa.append(float(str.strip(tds[18].text)))
                 eps.append(float(str.strip(tds[20].text)))
 
-                roe4 += float(str.strip(tds[16].text))
-                roa4 += float(str.strip(tds[18].text))
-                eps4 += float(str.strip(tds[20].text))
-
                 cnt += 1
                 if cnt == 5:
                     break
+
+        for i in range(4):
+            roe4 += roe[i]
+            roa4 += roa[i]
+            eps4 += eps[i]
 
         if eps[1] <= 0:
             seasonIncrement = 0
