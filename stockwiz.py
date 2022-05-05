@@ -149,7 +149,7 @@ class StockWiz():
             raise Exception(url + ' [Error]')
 
         soup = BeautifulSoup(self.driver.page_source, 'html.parser')
-        soup_table_main = soup.find('table', class_='b1 p4_0 r0_10 row_bg_2n row_mouse_over')
+        soup_table_main = soup.find('table', id='tblDetail')
         soup_trs = soup_table_main.find_all('tr', attrs={'align':'center'})
 
         cnt = 0
